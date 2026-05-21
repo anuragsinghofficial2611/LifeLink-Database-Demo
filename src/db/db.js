@@ -1,8 +1,13 @@
 const mongoose = require('mongoose')
 
 async function connectDB(){
+    const mongoUri = process.env.MONGO_URI
+    if (!mongoUri) {
+        throw new Error('MONGO_URI is not defined in environment variables')
+    }
+
     try {
-        await mongoose.connect('mongodb+srv://firstproject:kELb7r7bOVEpxEJN@firstproject.jiastpt.mongodb.net/LifeLinkDataBase', {
+        await mongoose.connect(mongoUri, {
             retryWrites: true,
             w: 'majority',
             serverSelectionTimeoutMS: 5000,
